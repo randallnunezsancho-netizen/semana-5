@@ -58,39 +58,55 @@ st.markdown("""
     }
 
     .uia-card {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
-        border-radius: 10px;
-        padding: 20px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        background: #152238 !important;
+        border: 1px solid #2d456b !important;
+        border-radius: 12px;
+        padding: 22px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
         margin-bottom: 20px;
+        color: #f8fafc !important;
+    }
+    
+    .uia-card h3, .uia-card h4 {
+        color: #60a5fa !important;
+    }
+
+    .uia-card p, .uia-card li, .uia-card span, .uia-card ol, .uia-card ul, .uia-card b, .uia-card i {
+        color: #f1f5f9 !important;
+        line-height: 1.6;
     }
 
     .dark-card {
-        background: #0f172a;
-        color: #f8fafc;
-        border: 1px solid #334155;
-        border-radius: 10px;
+        background: #0f172a !important;
+        color: #f8fafc !important;
+        border: 1px solid #334155 !important;
+        border-radius: 12px;
         padding: 20px;
         margin-bottom: 20px;
     }
 
     .pedagogical-alert {
-        background-color: #f0fdf4;
-        border-left: 5px solid #16a34a;
+        background-color: #064e3b !important;
+        border-left: 5px solid #10b981 !important;
         padding: 15px 20px;
-        border-radius: 6px;
+        border-radius: 8px;
         margin: 15px 0;
-        color: #14532d;
+        color: #ecfdf5 !important;
+    }
+    .pedagogical-alert p, .pedagogical-alert span, .pedagogical-alert strong {
+        color: #ecfdf5 !important;
     }
 
     .struggle-alert {
-        background-color: #fffbeb;
-        border-left: 5px solid #d97706;
+        background-color: #451a03 !important;
+        border-left: 5px solid #f59e0b !important;
         padding: 15px 20px;
-        border-radius: 6px;
+        border-radius: 8px;
         margin: 15px 0;
-        color: #78350f;
+        color: #fef3c7 !important;
+    }
+    .struggle-alert p, .struggle-alert span, .struggle-alert b, .struggle-alert strong {
+        color: #fef3c7 !important;
     }
 
     .stButton>button {
@@ -372,16 +388,16 @@ with tab_debate:
     col_da, col_db = st.columns(2)
     with col_da:
         st.markdown(f"""
-        <div class="uia-card" style="border-top: 4px solid #2563eb;">
-            <h4 style="color: #1e3a8a;">Lado 1</h4>
-            <p>{debate_info['bando_a']}</p>
+        <div class="uia-card" style="border-top: 4px solid #3b82f6 !important; background: #152238 !important;">
+            <h4 style="color: #60a5fa !important; margin-top: 0; font-size: 1.15rem; font-weight: 700;">Lado 1</h4>
+            <p style="color: #f8fafc !important; font-size: 1rem; line-height: 1.6;">{debate_info['bando_a']}</p>
         </div>
         """, unsafe_allow_html=True)
     with col_db:
         st.markdown(f"""
-        <div class="uia-card" style="border-top: 4px solid #d97706;">
-            <h4 style="color: #b45309;">Lado 2</h4>
-            <p>{debate_info['bando_b']}</p>
+        <div class="uia-card" style="border-top: 4px solid #f59e0b !important; background: #152238 !important;">
+            <h4 style="color: #fbbf24 !important; margin-top: 0; font-size: 1.15rem; font-weight: 700;">Lado 2</h4>
+            <p style="color: #f8fafc !important; font-size: 1rem; line-height: 1.6;">{debate_info['bando_b']}</p>
         </div>
         """, unsafe_allow_html=True)
 
@@ -445,41 +461,41 @@ with tab_case:
     """)
 
     st.markdown("""
-    <div class="uia-card">
-        <h3 style="color: #0d284f; margin-top: 0;">1) Título del Caso</h3>
-        <p style="font-size: 1.15rem; font-weight: 700; color: #1e3a8a;">
+    <div class="uia-card" style="border-left: 5px solid #3b82f6 !important; background: #152238 !important;">
+        <h3 style="color: #60a5fa !important; margin-top: 0;">1) Título del Caso</h3>
+        <p style="font-size: 1.15rem; font-weight: 700; color: #fbbf24 !important;">
             "El Cortocircuito de Liquidez de Marzo 2020: La Ilusión del Activo Libre de Riesgo frente al Shock de Efectivo"
         </p>
         
-        <h3 style="color: #0d284f;">2) Objetivos de Aprendizaje</h3>
-        <ul>
+        <h3 style="color: #60a5fa !important;">2) Objetivos de Aprendizaje</h3>
+        <ul style="color: #f1f5f9 !important;">
             <li>Comprender la diferencia crítica entre solvencia y liquidez inmediata en momentos de pánico financiero.</li>
             <li>Evaluar por qué los bonos del Tesoro, considerados activos libres de riesgo crediticio, se vendieron masivamente junto con las acciones.</li>
             <li>Diseñar alternativas de política monetaria evaluando las compensaciones (trade-offs) entre estabilidad financiera y monetización del déficit.</li>
         </ul>
 
-        <h3 style="color: #0d284f;">3) Contexto del Caso</h3>
-        <p>
+        <h3 style="color: #60a5fa !important;">3) Contexto del Caso</h3>
+        <p style="color: #f1f5f9 !important;">
             A mediados de marzo de 2020, ante la propagación global del COVID-19 y el colapso bursátil, ocurrió un fenómeno inédito:
-            los bonos del Tesoro a largo plazo cayeron en precio al mismo tiempo que las acciones. El sector exterior vendió <b>$250,000 millones</b> en títulos del Tesoro en cuestión de días para conseguir dólares en efectivo.
+            los bonos del Tesoro a largo plazo cayeron en precio al mismo tiempo que las acciones. El sector exterior vendió <b style="color: #fbbf24 !important;">$250,000 millones</b> en títulos del Tesoro en cuestión de días para conseguir dólares en efectivo.
             Fondos de cobertura con estrategias de paridad de riesgo apalancado se vieron forzados a liquidar.
             Los diferenciales de compra/venta (bid-ask spreads) para bonos <i>off-the-run</i> se dispararon y la profundidad del mercado se evaporó.
         </p>
 
-        <h3 style="color: #0d284f;">4) Planteamiento del Problema o Desafío</h3>
-        <p>
-            <b>El Conflicto Central:</b> El mercado del Tesoro de EE.UU. (el pilar del sistema financiero global) dejó de funcionar eficazmente.
+        <h3 style="color: #60a5fa !important;">4) Planteamiento del Problema o Desafío</h3>
+        <p style="color: #f1f5f9 !important;">
+            <b style="color: #60a5fa !important;">El Conflicto Central:</b> El mercado del Tesoro de EE.UU. (el pilar del sistema financiero global) dejó de funcionar eficazmente.
             Si el gobierno requería emitir billones para transferencias de emergencia por desempleo y la demanda privada se había secado,
             ¿debía la Reserva Federal convertirse en el comprador directo ilimitado a costa de monetizar el déficit fiscal?
         </p>
-        <p><i>Preguntas orientadoras de reflexión:</i></p>
-        <ol>
+        <p style="color: #94a3b8 !important; font-style: italic;">Preguntas orientadoras de reflexión:</p>
+        <ol style="color: #f1f5f9 !important;">
             <li>¿Por qué en una crisis extrema los inversores prefieren billetes de dólares en lugar de títulos del Tesoro que pagan intereses?</li>
             <li>¿Qué consecuencias a mediano plazo genera que el banco central compre $75,000 millones diarios de deuda de su propio gobierno?</li>
         </ol>
         
-        <h3 style="color: #0d284f;">5) Guía de Investigación y Posicionamiento Estudiantil</h3>
-        <p>
+        <h3 style="color: #60a5fa !important;">5) Guía de Investigación y Posicionamiento Estudiantil</h3>
+        <p style="color: #f1f5f9 !important;">
             Analiza el fragmento de las actas del FOMC de marzo/abril de 2020 provisto en la fuente. Redacta a continuación tu dictamen técnico
             evaluando el impacto sobre los intermediarios primarios y recomendando la postura de política adecuada.
         </p>
@@ -577,8 +593,8 @@ with tab_sim:
 
     st.markdown(f"### 📍 {step_data['title']}")
     st.markdown(f"""
-    <div class="uia-card" style="border-left: 5px solid #0d284f;">
-        <p style="font-size: 1.05rem;">{step_data['context']}</p>
+    <div class="uia-card" style="border-left: 5px solid #3b82f6 !important; background: #152238 !important;">
+        <p style="font-size: 1.05rem; color: #f8fafc !important; line-height: 1.6;">{step_data['context']}</p>
     </div>
     """, unsafe_allow_html=True)
 
