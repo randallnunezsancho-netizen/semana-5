@@ -10,11 +10,10 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-from plotly.subplots import make_subplots
 from PIL import Image
 
 # -----------------------------------------------------------------------------
-# 1. CONFIGURACIÓN DE PÁGINA Y ESTILO VISUAL INSTITUCIONAL UIA
+# 1. CONFIGURACIÓN DE PÁGINA
 # -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="UIA Economía | Disonancia del Mercado del Tesoro",
@@ -22,105 +21,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-
-# Inyección de estilos CSS de alta calidad (Fondo institucional, badges, tarjetas)
-st.markdown("""
-<style>
-    /* Tipografía y jerarquía */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
-    
-    html, body, [class*="css"] {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-    
-    /* Contenedor del encabezado institucional */
-    .uia-header {
-        background: linear-gradient(135deg, #07162c 0%, #0d284f 50%, #153e75 100%);
-        border: 1px solid rgba(217, 119, 6, 0.3);
-        border-radius: 12px;
-        padding: 24px 30px;
-        color: #ffffff;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
-        margin-bottom: 25px;
-    }
-    
-    .uia-badge {
-        display: inline-block;
-        background-color: #d97706;
-        color: #ffffff;
-        padding: 4px 12px;
-        font-size: 0.8rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        border-radius: 20px;
-        margin-bottom: 10px;
-    }
-
-    .uia-card {
-        background: #152238 !important;
-        border: 1px solid #2d456b !important;
-        border-radius: 12px;
-        padding: 22px;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
-        margin-bottom: 20px;
-        color: #f8fafc !important;
-    }
-    
-    .uia-card h3, .uia-card h4 {
-        color: #60a5fa !important;
-    }
-
-    .uia-card p, .uia-card li, .uia-card span, .uia-card ol, .uia-card ul, .uia-card b, .uia-card i {
-        color: #f1f5f9 !important;
-        line-height: 1.6;
-    }
-
-    .dark-card {
-        background: #0f172a !important;
-        color: #f8fafc !important;
-        border: 1px solid #334155 !important;
-        border-radius: 12px;
-        padding: 20px;
-        margin-bottom: 20px;
-    }
-
-    .pedagogical-alert {
-        background-color: #064e3b !important;
-        border-left: 5px solid #10b981 !important;
-        padding: 15px 20px;
-        border-radius: 8px;
-        margin: 15px 0;
-        color: #ecfdf5 !important;
-    }
-    .pedagogical-alert p, .pedagogical-alert span, .pedagogical-alert strong {
-        color: #ecfdf5 !important;
-    }
-
-    .struggle-alert {
-        background-color: #451a03 !important;
-        border-left: 5px solid #f59e0b !important;
-        padding: 15px 20px;
-        border-radius: 8px;
-        margin: 15px 0;
-        color: #fef3c7 !important;
-    }
-    .struggle-alert p, .struggle-alert span, .struggle-alert b, .struggle-alert strong {
-        color: #fef3c7 !important;
-    }
-
-    .stButton>button {
-        border-radius: 8px;
-        font-weight: 600;
-        transition: all 0.2s ease-in-out;
-    }
-    
-    .stButton>button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(13, 40, 79, 0.25);
-    }
-</style>
-""", unsafe_allow_html=True)
 
 # -----------------------------------------------------------------------------
 # 2. GESTIÓN DEL ESTADO DE SESIÓN (st.session_state)
@@ -167,14 +67,9 @@ if "sim_step" not in st.session_state:
 # 3. BARRA LATERAL (SIDEBAR): LOGO, IDENTIFICACIÓN, PRINCIPIOS Y FUENTES
 # -----------------------------------------------------------------------------
 with st.sidebar:
-    # Contenedor especial con fondo oscuro para resaltar el logo transparente
     logo_path = os.path.join(os.path.dirname(__file__), "Logo-transparente UIA.png")
     if os.path.exists(logo_path):
-        st.markdown("""
-        <div style="background-color: #0b1f3a; padding: 15px; border-radius: 12px; text-align: center; margin-bottom: 15px; border: 1px solid #1e3a5f;">
-        """, unsafe_allow_html=True)
         st.image(logo_path, caption="Universidad Internacional de las Américas", use_container_width=True)
-        st.markdown("</div>", unsafe_allow_html=True)
     else:
         st.title("🏛️ U.I.A. Economía")
 
@@ -188,8 +83,8 @@ with st.sidebar:
     if student_input:
         st.session_state.student_name = student_input
 
-    st.markdown("---")
-    
+    st.divider()
+
     # Plegables de Contexto Pedagógico y Metodológico
     with st.expander("📚 Marco Didáctico: 4 Principios de Merrill", expanded=False):
         st.markdown("""
@@ -225,21 +120,15 @@ with st.sidebar:
 # -----------------------------------------------------------------------------
 # 4. ENCABEZADO PRINCIPAL DE LA APLICACIÓN
 # -----------------------------------------------------------------------------
-st.markdown(f"""
-<div class="uia-header">
-    <span class="uia-badge">Economía I • Sesión Sincrónica</span>
-    <h1 style="margin: 0; font-size: 2.2rem; font-weight: 800;">Disonancia del Mercado del Tesoro & Control de Rendimientos</h1>
-    <p style="margin: 8px 0 0 0; color: #cbd5e1; font-size: 1.05rem;">
-        Plataforma interactiva para el desarrollo del pensamiento crítico y comprobación de maestría oral.
-    </p>
-    <div style="margin-top: 15px; font-size: 0.95rem; color: #f59e0b; font-weight: 600;">
-        👤 Alumno(a) activo(a): <span style="color: #ffffff;">{st.session_state.student_name if st.session_state.student_name else "Por favor ingrese su nombre en la barra lateral"}</span>
-    </div>
-</div>
-""", unsafe_allow_html=True)
-
-if not st.session_state.student_name:
-    st.warning("⚠️ **Atención:** Para comenzar y asegurar que tus aportes queden consolidados en el informe final, por favor ingresa tu nombre en la barra lateral izquierda.")
+with st.container(border=True):
+    st.caption("ECONOMÍA I • SESIÓN SINCRÓNICA • UNIVERSIDAD INTERNACIONAL DE LAS AMÉRICAS")
+    st.title("🏛️ Disonancia del Mercado del Tesoro & Control de Rendimientos")
+    st.markdown("**Plataforma interactiva para el desarrollo del pensamiento crítico y comprobación de maestría oral.**")
+    
+    if st.session_state.student_name:
+        st.success(f"👤 **Alumno(a) activo(a):** {st.session_state.student_name}")
+    else:
+        st.warning("⚠️ **Atención:** Para comenzar y asegurar que tus aportes queden consolidados en el informe final, por favor ingresa tu nombre en la barra lateral izquierda.")
 
 # -----------------------------------------------------------------------------
 # 5. ESTRUCTURA MODULAR POR PESTAÑAS (TABS)
@@ -257,7 +146,7 @@ tab_demo, tab_debate, tab_case, tab_sim, tab_viva, tab_summary = st.tabs([
 # TAB 1: DEMOSTRACIÓN & MÉTRICAS SINCRÓNICAS (Merrill: Demostración)
 # =============================================================================
 with tab_demo:
-    st.markdown("## 1. Demostración Visual de la Dinámica Macroeconómica")
+    st.header("1. Demostración Visual de la Dinámica Macroeconómica")
     st.markdown("""
     Durante la sesión sincrónica, analizamos la **disonancia** fundamental expuesta por Lyn Alden:
     históricamente el mercado de bonos del Tesoro representaba el *"dinero inteligente"* (anticipando recesiones sin falsos positivos).
@@ -276,12 +165,12 @@ with tab_demo:
     with col4:
         st.metric(label="Compras Fed vs Emisión Neta", value=">50%", delta="2.2 de 4 Billones USD")
 
-    st.markdown("---")
+    st.divider()
 
     col_graph1, col_graph2 = st.columns(2)
 
     with col_graph1:
-        st.markdown("### 📈 A. El Núcleo de la Disonancia: Nominal vs Inflación")
+        st.subheader("📈 A. El Núcleo de la Disonancia: Nominal vs Inflación")
         st.caption("Divergencia entre la tasa de inflación anticipada por el mercado (Breakeven) y el rendimiento nominal anclado por la Fed.")
         
         # Generación de serie sintética representativa de los datos de la fuente (Enero a Agosto 2020)
@@ -298,9 +187,9 @@ with tab_demo:
         })
 
         fig1 = go.Figure()
-        fig1.add_trace(go.Scatter(x=df_disonancia["Fecha"], y=df_disonancia["Rendimiento Nominal 10Y"], mode='lines', name='Nominal 10Y', line=dict(color='#2563eb', width=2.5)))
-        fig1.add_trace(go.Scatter(x=df_disonancia["Fecha"], y=df_disonancia["Breakeven Inflación 10Y"], mode='lines', name='Expectativa Inflación (Breakeven)', line=dict(color='#dc2626', width=2.5, dash='dash')))
-        fig1.add_trace(go.Scatter(x=df_disonancia["Fecha"], y=df_disonancia["Rendimiento Real (Nominal - Breakeven)"], mode='lines', name='Rendimiento Real (Área Negativa)', line=dict(color='#059669', width=2), fill='tozeroy'))
+        fig1.add_trace(go.Scatter(x=df_disonancia["Fecha"], y=df_disonancia["Rendimiento Nominal 10Y"], mode='lines', name='Nominal 10Y', line=dict(color='#3b82f6', width=2.5)))
+        fig1.add_trace(go.Scatter(x=df_disonancia["Fecha"], y=df_disonancia["Breakeven Inflación 10Y"], mode='lines', name='Expectativa Inflación (Breakeven)', line=dict(color='#ef4444', width=2.5, dash='dash')))
+        fig1.add_trace(go.Scatter(x=df_disonancia["Fecha"], y=df_disonancia["Rendimiento Real (Nominal - Breakeven)"], mode='lines', name='Rendimiento Real (Negativo)', line=dict(color='#10b981', width=2), fill='tozeroy'))
         fig1.update_layout(
             height=380,
             margin=dict(l=20, r=20, t=30, b=20),
@@ -312,13 +201,13 @@ with tab_demo:
         st.info("💡 **Observación pedagógica:** Mientras la inflación anticipada se recuperó con fuerza hacia el 1.7%, los rendimientos nominales quedaron planchados en 0.5%-0.7% por la intervención de la Fed, empujando la tasa real a territorio profundamente negativo (-1.08%).")
 
     with col_graph2:
-        st.markdown("### 🏦 B. Monetización del Déficit: Quién Financia al Tío Sam")
+        st.subheader("🏦 B. Monetización del Déficit: Quién Financia al Tío Sam")
         st.caption("Comparación de la emisión neta total acumulada vs las compras directas de la Reserva Federal (T4 2019 a Ago 2020).")
         
         fig2 = go.Figure(data=[
-            go.Bar(name='Emisión Neta Total del Tesoro', x=['Financiamiento 2019-2020'], y=[4.0], marker_color='#94a3b8', text=['$4.0 Trillones'], textposition='auto'),
-            go.Bar(name='Compras Acumuladas Fed', x=['Financiamiento 2019-2020'], y=[2.2], marker_color='#1e3a8a', text=['$2.2 Trillones (>55%)'], textposition='auto'),
-            go.Bar(name='Absorción Mercado Privado', x=['Financiamiento 2019-2020'], y=[1.8], marker_color='#d97706', text=['$1.8 Trillones'], textposition='auto')
+            go.Bar(name='Emisión Neta Total del Tesoro', x=['Financiamiento 2019-2020'], y=[4.0], marker_color='#64748b', text=['$4.0 Trillones'], textposition='auto'),
+            go.Bar(name='Compras Acumuladas Fed', x=['Financiamiento 2019-2020'], y=[2.2], marker_color='#2563eb', text=['$2.2 Trillones (>55%)'], textposition='auto'),
+            go.Bar(name='Absorción Mercado Privado', x=['Financiamiento 2019-2020'], y=[1.8], marker_color='#f59e0b', text=['$1.8 Trillones'], textposition='auto')
         ])
         fig2.update_layout(
             barmode='group',
@@ -331,32 +220,35 @@ with tab_demo:
         st.warning("⚠️ **Concepto Feynman:** 'Comer nuestra propia comida': La Fed imprimió dólares para absorber más bonos que todo el sector exterior acumuló en los últimos 8 años.")
 
     # Metáforas didácticas de la lectura
-    st.markdown("### 🚴 Analogías Didácticas para Desmitificar Conceptos Complejos")
+    st.subheader("🚴 Analogías Didácticas para Desmitificar Conceptos Complejos")
     c_m1, c_m2, c_m3 = st.columns(3)
     with c_m1:
-        st.markdown("""
-        **1. El Niño y la Bicicleta con Rueditas**
-        * **Analogía:** La Fed sostuvo al mercado en marzo y luego intentó que pedaleara solo retirando levemente las compras.
-        * **Falla en agosto:** Cuando el niño (mercado privado) intentó absorber las subastas de bonos a 30 años sin la Fed, la bicicleta empezó a tambalearse y los rendimientos se dispararon 36%.
-        """)
+        with st.container(border=True):
+            st.markdown("#### 1. El Niño y la Bici con Rueditas")
+            st.markdown("""
+            * **Analogía:** La Fed sostuvo al mercado en marzo y luego intentó que pedaleara solo retirando levemente las compras.
+            * **Falla en agosto:** Cuando el niño (mercado privado) intentó absorber las subastas de bonos a 30 años sin la Fed, la bicicleta empezó a tambalearse y los rendimientos se dispararon 36%.
+            """)
     with c_m2:
-        st.markdown("""
-        **2. El Balón de Playa bajo el Agua**
-        * **Analogía:** Mantener los rendimientos por debajo de la inflación es como hundir un balón de playa a la fuerza.
-        * **Fuerza ascendente:** La presión inflacionaria y el déficit fiscal empujan el rendimiento hacia arriba. Si la Fed suelta el balón, los costes del servicio de la deuda del gobierno estallan.
-        """)
+        with st.container(border=True):
+            st.markdown("#### 2. El Balón de Playa bajo el Agua")
+            st.markdown("""
+            * **Analogía:** Mantener los rendimientos por debajo de la inflación es como hundir un balón de playa a la fuerza.
+            * **Fuerza ascendente:** La presión inflacionaria y el déficit fiscal empujan el rendimiento hacia arriba. Si la Fed suelta el balón, los costes del servicio de la deuda del gobierno estallan.
+            """)
     with c_m3:
-        st.markdown("""
-        **3. Rendimientos Reales y el Oro**
-        * **Analogía:** El costo de oportunidad de guardar riqueza.
-        * **Efecto:** Cuando los bonos pagan tasas reales negativas (-1%), el efectivo pierde poder adquisitivo. Guardar un activo escaso sin rendimiento (oro) se vuelve matemáticamente superior a financiar deuda que pierde valor.
-        """)
+        with st.container(border=True):
+            st.markdown("#### 3. Rendimientos Reales y el Oro")
+            st.markdown("""
+            * **Analogía:** El costo de oportunidad de guardar riqueza.
+            * **Efecto:** Cuando los bonos pagan tasas reales negativas (-1%), el efectivo pierde poder adquisitivo. Guardar un activo escaso sin rendimiento (oro) se vuelve matemáticamente superior a financiar deuda que pierde valor.
+            """)
 
 # =============================================================================
 # TAB 2: DEBATE SOCRÁTICO (Merrill: Aplicación & Contrastación)
 # =============================================================================
 with tab_debate:
-    st.markdown("## 2. Módulo de Pensamiento Crítico: Debate Socrático")
+    st.header("2. Módulo de Pensamiento Crítico: Debate Socrático")
     st.markdown("""
     En este espacio deberás analizar los desacuerdos fundamentales presentes en las fuentes, elegir una postura
     y defenderla con argumentos macroeconómicos rigurosos. **La aplicación evaluará la calidad de tu razonamiento.**
@@ -365,46 +257,40 @@ with tab_debate:
     debates = {
         "Debate 1: Señales Distorsionadas vs Dinero Inteligente": {
             "pregunta": "¿Podemos seguir confiando en la curva de rendimientos como 'dinero inteligente' si la Reserva Federal compra más de la mitad de la emisión?",
-            "bando_a": "Postura A: El mercado ha sido totalmente intervenido. La Fed anula las fuerzas del mercado libre mediante QE agresivo y guía futura; los rendimientos ya no reflejan expectativas económicas reales sino el capricho del banco central.",
-            "bando_b": "Postura B: El mercado aún emite señales verídicas si sabemos dónde mirar. Por ejemplo, los bonos TIPS (protegidos contra inflación) y el breakeven anticiparon correctamente el rebote inflacionario a pesar de las compras de la Fed."
+            "bando_a": "El mercado ha sido totalmente intervenido. La Fed anula las fuerzas del mercado libre mediante QE agresivo y guía futura; los rendimientos ya no reflejan expectativas económicas reales sino el capricho del banco central.",
+            "bando_b": "El mercado aún emite señales verídicas si sabemos dónde mirar. Por ejemplo, los bonos TIPS (protegidos contra inflación) y el breakeven anticiparon correctamente el rebote inflacionario a pesar de las compras de la Fed."
         },
         "Debate 2: Deflación Estructural vs Estanflación / Inflación Secular": {
             "pregunta": "¿Hacia dónde se dirige la economía de los años 2020 tras el choque pandémico y la emisión masiva de deuda?",
-            "bando_a": "Postura A: Campamento Deflacionario. El sobreendeudamiento extremo, el desempleo y la eventual retirada del estímulo fiscal provocarán insolvencias generalizadas y una espiral deflacionaria prolongada.",
-            "bando_b": "Postura B: Campamento Estanflacionario. La monetización directa de déficits gigantescos combinada con limitaciones de oferta revivirá la inflación de los años 70 y obligará a licuar la deuda soberana mediante tasas reales negativas."
+            "bando_a": "Campamento Deflacionario. El sobreendeudamiento extremo, el desempleo y la eventual retirada del estímulo fiscal provocarán insolvencias generalizadas y una espiral deflacionaria prolongada.",
+            "bando_b": "Campamento Estanflacionario. La monetización directa de déficits gigantescos combinada con limitaciones de oferta revivirá la inflación de los años 70 y obligará a licuar la deuda soberana mediante tasas reales negativas."
         },
         "Debate 3: Control Formal de la Curva (YCC) vs Guía Futura Exclusiva": {
             "pregunta": "¿Debe la Fed formalizar un Control de Curva de Rendimientos (YCC) al estilo de los años 1940 para topar las tasas a largo plazo?",
-            "bando_a": "Postura A: Sí, es imperativo. Con déficits superiores al 100% del PIB, permitir que los rendimientos a 10 y 30 años suban tornaría impagable el servicio de la deuda del gobierno, requiriendo un tope formal como en 1942.",
-            "bando_b": "Postura B: No, el riesgo es excesivo. Como demostró la experiencia histórica previa al Acuerdo de 1951, el YCC expande el balance sin control si las expectativas de inflación suben, poniendo en riesgo la independencia del banco central."
+            "bando_a": "Sí, es imperativo. Con déficits superiores al 100% del PIB, permitir que los rendimientos a 10 y 30 años suban tornaría impagable el servicio de la deuda del gobierno, requiriendo un tope formal como en 1942.",
+            "bando_b": "No, el riesgo es excesivo. Como demostró la experiencia histórica previa al Acuerdo de 1951, el YCC expande el balance sin control si las expectativas de inflación suben, poniendo en riesgo la independencia del banco central."
         }
     }
 
     selected_debate_key = st.selectbox("Selecciona la Controversia Macroeconómica a examinar:", list(debates.keys()))
     debate_info = debates[selected_debate_key]
 
-    st.markdown(f"### ❓ Dilema Central: {debate_info['pregunta']}")
+    st.subheader(f"❓ Dilema Central: {debate_info['pregunta']}")
     
     col_da, col_db = st.columns(2)
     with col_da:
-        st.markdown(f"""
-        <div class="uia-card" style="border-top: 4px solid #3b82f6 !important; background: #152238 !important;">
-            <h4 style="color: #60a5fa !important; margin-top: 0; font-size: 1.15rem; font-weight: 700;">Lado 1</h4>
-            <p style="color: #f8fafc !important; font-size: 1rem; line-height: 1.6;">{debate_info['bando_a']}</p>
-        </div>
-        """, unsafe_allow_html=True)
+        with st.container(border=True):
+            st.markdown("#### 🟦 Postura A")
+            st.write(debate_info['bando_a'])
     with col_db:
-        st.markdown(f"""
-        <div class="uia-card" style="border-top: 4px solid #f59e0b !important; background: #152238 !important;">
-            <h4 style="color: #fbbf24 !important; margin-top: 0; font-size: 1.15rem; font-weight: 700;">Lado 2</h4>
-            <p style="color: #f8fafc !important; font-size: 1rem; line-height: 1.6;">{debate_info['bando_b']}</p>
-        </div>
-        """, unsafe_allow_html=True)
+        with st.container(border=True):
+            st.markdown("#### 🟧 Postura B")
+            st.write(debate_info['bando_b'])
 
-    st.markdown("#### ✍️ Tu Posicionamiento Estudiantil")
+    st.subheader("✍️ Tu Posicionamiento Estudiantil")
     user_stance = st.radio(
         "¿Cuál postura decides respaldar tras contrastar los datos de la fuente?",
-        ["Respaldar Lado 1", "Respaldar Lado 2", "Proponer una síntesis dialéctica intermedia"],
+        ["Respaldar Postura A", "Respaldar Postura B", "Proponer una síntesis dialéctica intermedia"],
         index=0
     )
 
@@ -444,77 +330,65 @@ with tab_debate:
             st.success("Respuesta guardada con éxito en tu sesión.")
 
     if st.session_state.session_answers["socratic_debate"]["feedback"]:
-        st.markdown(f"""
-        <div class="pedagogical-alert">
-            {st.session_state.session_answers['socratic_debate']['feedback']}
-        </div>
-        """, unsafe_allow_html=True)
+        st.info(st.session_state.session_answers['socratic_debate']['feedback'])
 
 # =============================================================================
 # TAB 3: ESTUDIO DE CASO (Case Method - Estructura 5 Puntos UIA)
 # =============================================================================
 with tab_case:
-    st.markdown("## 3. Estudio de Caso: Metodología Pedagógica UIA")
-    st.markdown("""
-    Este caso de estudio sigue estrictamente la estructura metodológica de 5 puntos de la Cátedra de Economía Aplicada.
-    Analiza la situación y redacta tu dictamen técnico.
-    """)
+    st.header("3. Estudio de Caso: Metodología Pedagógica UIA")
+    st.caption("Estructura metodológica oficial de 5 puntos de la Cátedra de Economía Aplicada.")
 
-    st.markdown("""
-    <div class="uia-card" style="border-left: 5px solid #3b82f6 !important; background: #152238 !important;">
-        <h3 style="color: #60a5fa !important; margin-top: 0;">1) Título del Caso</h3>
-        <p style="font-size: 1.15rem; font-weight: 700; color: #fbbf24 !important;">
-            "El Cortocircuito de Liquidez de Marzo 2020: La Ilusión del Activo Libre de Riesgo frente al Shock de Efectivo"
-        </p>
+    with st.container(border=True):
+        st.subheader("1) Título del Caso")
+        st.markdown("**\"El Cortocircuito de Liquidez de Marzo 2020: La Ilusión del Activo Libre de Riesgo frente al Shock de Efectivo\"**")
         
-        <h3 style="color: #60a5fa !important;">2) Objetivos de Aprendizaje</h3>
-        <ul style="color: #f1f5f9 !important;">
-            <li>Comprender la diferencia crítica entre solvencia y liquidez inmediata en momentos de pánico financiero.</li>
-            <li>Evaluar por qué los bonos del Tesoro, considerados activos libres de riesgo crediticio, se vendieron masivamente junto con las acciones.</li>
-            <li>Diseñar alternativas de política monetaria evaluando las compensaciones (trade-offs) entre estabilidad financiera y monetización del déficit.</li>
-        </ul>
+        st.subheader("2) Objetivos de Aprendizaje")
+        st.markdown("""
+        * **Comprender la diferencia crítica entre solvencia y liquidez inmediata** en momentos de pánico financiero.
+        * **Evaluar por qué los bonos del Tesoro**, considerados activos libres de riesgo crediticio, se vendieron masivamente junto con las acciones.
+        * **Diseñar alternativas de política monetaria** evaluando las compensaciones (*trade-offs*) entre estabilidad financiera y monetización del déficit.
+        """)
 
-        <h3 style="color: #60a5fa !important;">3) Contexto del Caso</h3>
-        <p style="color: #f1f5f9 !important;">
-            A mediados de marzo de 2020, ante la propagación global del COVID-19 y el colapso bursátil, ocurrió un fenómeno inédito:
-            los bonos del Tesoro a largo plazo cayeron en precio al mismo tiempo que las acciones. El sector exterior vendió <b style="color: #fbbf24 !important;">$250,000 millones</b> en títulos del Tesoro en cuestión de días para conseguir dólares en efectivo.
-            Fondos de cobertura con estrategias de paridad de riesgo apalancado se vieron forzados a liquidar.
-            Los diferenciales de compra/venta (bid-ask spreads) para bonos <i>off-the-run</i> se dispararon y la profundidad del mercado se evaporó.
-        </p>
+        st.subheader("3) Contexto del Caso")
+        st.markdown("""
+        A mediados de marzo de 2020, ante la propagación global del COVID-19 y el colapso bursátil, ocurrió un fenómeno inédito:
+        los bonos del Tesoro a largo plazo cayeron en precio al mismo tiempo que las acciones. El sector exterior vendió **$250,000 millones** en títulos del Tesoro en cuestión de días para conseguir dólares en efectivo.
+        Fondos de cobertura con estrategias de paridad de riesgo apalancado se vieron forzados a liquidar.
+        Los diferenciales de compra/venta (*bid-ask spreads*) para bonos *off-the-run* se dispararon y la profundidad del mercado se evaporó.
+        """)
 
-        <h3 style="color: #60a5fa !important;">4) Planteamiento del Problema o Desafío</h3>
-        <p style="color: #f1f5f9 !important;">
-            <b style="color: #60a5fa !important;">El Conflicto Central:</b> El mercado del Tesoro de EE.UU. (el pilar del sistema financiero global) dejó de funcionar eficazmente.
-            Si el gobierno requería emitir billones para transferencias de emergencia por desempleo y la demanda privada se había secado,
-            ¿debía la Reserva Federal convertirse en el comprador directo ilimitado a costa de monetizar el déficit fiscal?
-        </p>
-        <p style="color: #94a3b8 !important; font-style: italic;">Preguntas orientadoras de reflexión:</p>
-        <ol style="color: #f1f5f9 !important;">
-            <li>¿Por qué en una crisis extrema los inversores prefieren billetes de dólares en lugar de títulos del Tesoro que pagan intereses?</li>
-            <li>¿Qué consecuencias a mediano plazo genera que el banco central compre $75,000 millones diarios de deuda de su propio gobierno?</li>
-        </ol>
+        st.subheader("4) Planteamiento del Problema o Desafío")
+        st.markdown("""
+        **El Conflicto Central:** El mercado del Tesoro de EE.UU. (el pilar del sistema financiero global) dejó de funcionar eficazmente.
+        Si el gobierno requería emitir billones para transferencias de emergencia por desempleo y la demanda privada se había secado,
+        ¿debía la Reserva Federal convertirse en el comprador directo ilimitado a costa de monetizar el déficit fiscal?
+
+        *Preguntas orientadoras de reflexión:*
+        1. ¿Por qué en una crisis extrema los inversores prefieren billetes de dólares en lugar de títulos del Tesoro que pagan intereses?
+        2. ¿Qué consecuencias a mediano plazo genera que el banco central compre $75,000 millones diarios de deuda de su propio gobierno?
+        """)
         
-        <h3 style="color: #60a5fa !important;">5) Guía de Investigación y Posicionamiento Estudiantil</h3>
-        <p style="color: #f1f5f9 !important;">
-            Analiza el fragmento de las actas del FOMC de marzo/abril de 2020 provisto en la fuente. Redacta a continuación tu dictamen técnico
-            evaluando el impacto sobre los intermediarios primarios y recomendando la postura de política adecuada.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+        st.subheader("5) Guía de Investigación y Posicionamiento Estudiantil")
+        st.markdown("""
+        Analiza el fragmento de las actas del FOMC de marzo/abril de 2020 provisto en la fuente. Redacta a continuación tu dictamen técnico
+        evaluando el impacto sobre los intermediarios primarios y recomendando la postura de política adecuada.
+        """)
 
+    st.subheader("📝 Redacción del Dictamen Técnico")
     col_c1, col_c2 = st.columns(2)
     with col_c1:
         diag_text = st.text_area(
             "A. Diagnóstico: ¿Por qué colapsó la liquidez en los bonos off-the-run a mediados de marzo 2020?",
             value=st.session_state.session_answers["case_study"]["liquidity_diagnosis"],
-            height=130,
+            height=140,
             placeholder="Analiza las ventas extranjeras ($250B), el apalancamiento de fondos de cobertura y la búsqueda urgente de dólares billete..."
         )
     with col_c2:
         pol_text = st.text_area(
             "B. Recomendación: ¿Cómo debió actuar la Fed y qué compensación de riesgos (trade-offs) asumió?",
             value=st.session_state.session_answers["case_study"]["policy_decision"],
-            height=130,
+            height=140,
             placeholder="Evalúa la compra masiva de $75B/día vs el riesgo de inflación a futuro y pérdida de independencia..."
         )
 
@@ -536,17 +410,13 @@ with tab_case:
             st.success("Estudio de caso guardado exitosamente.")
 
     if st.session_state.session_answers["case_study"]["feedback"]:
-        st.markdown(f"""
-        <div class="pedagogical-alert">
-            {st.session_state.session_answers['case_study']['feedback']}
-        </div>
-        """, unsafe_allow_html=True)
+        st.info(st.session_state.session_answers['case_study']['feedback'])
 
 # =============================================================================
 # TAB 4: SIMULADOR INTERACTIVO "ELIGE TU AVENTURA ECONÓMICA" (Merrill: Aplicación)
 # =============================================================================
 with tab_sim:
-    st.markdown("## 4. Simulador Macroeconómico: Elige tu Propia Aventura")
+    st.header("4. Simulador Macroeconómico: Elige tu Propia Aventura")
     st.markdown("""
     Asume el rol de **Gobernador de la Reserva Federal y Miembro del FOMC**. Cada decisión que tomes
     ramificará la trayectoria económica y expondrá los dilemas reales vividos entre 2019 y 2020.
@@ -591,12 +461,9 @@ with tab_sim:
     curr_step = st.session_state.sim_step
     step_data = sim_steps_data.get(curr_step, sim_steps_data[4])
 
-    st.markdown(f"### 📍 {step_data['title']}")
-    st.markdown(f"""
-    <div class="uia-card" style="border-left: 5px solid #3b82f6 !important; background: #152238 !important;">
-        <p style="font-size: 1.05rem; color: #f8fafc !important; line-height: 1.6;">{step_data['context']}</p>
-    </div>
-    """, unsafe_allow_html=True)
+    st.subheader(f"📍 {step_data['title']}")
+    with st.container(border=True):
+        st.markdown(f"**Escenario Macroeconómico:** {step_data['context']}")
 
     opt_choice = st.radio(
         "¿Qué decisión de política económica eliges implementar?",
@@ -625,12 +492,7 @@ with tab_sim:
                 st.session_state.session_answers["narrative_sim"]["feedback"] = "Dominio completo de la cronología y de los dilemas de monetización de déficit."
         else:
             st.error(chosen_opt[3])
-            st.markdown("""
-            <div class="struggle-alert">
-                <b>Pausa Pedagógica (Productive Struggle):</b> Antes de avanzar, reflexiona sobre la relación causal.
-                Recuerda que la Fed interviene no por capricho, sino porque la emisión de deuda superó la capacidad de absorción del mercado privado. ¡Vuelve a intentarlo!
-            </div>
-            """, unsafe_allow_html=True)
+            st.warning("**Pausa Pedagógica (Productive Struggle):** Antes de avanzar, reflexiona sobre la relación causal. Recuerda que la Fed interviene no por capricho, sino porque la emisión de deuda superó la capacidad de absorción del mercado privado. ¡Vuelve a intentarlo!")
 
     if curr_step > 1:
         if st.button("🔄 Reiniciar Simulación", key="btn_reset_sim"):
@@ -642,7 +504,7 @@ with tab_sim:
 # TAB 5: COMPROBACIÓN DE MAESTRÍA (Mastery Viva / Defensa Oral)
 # =============================================================================
 with tab_viva:
-    st.markdown("## 5. Comprobación de Maestría: Simulación de Defensa Oral (Mastery Viva)")
+    st.header("5. Comprobación de Maestría: Simulación de Defensa Oral (Mastery Viva)")
     st.markdown("""
     En concordancia con el marco **Mastery Flip de Jon Bergmann**, la verdadera verificación de aprendizaje
     ocurre en el espacio sincrónico a través del **Human Check**: una defensa oral cara a cara con el docente.
@@ -650,12 +512,9 @@ with tab_viva:
     *Utiliza esta sección para estructurar tus respuestas antes de la sustentación.*
     """)
 
-    st.markdown("""
-    <div class="dark-card">
-        <h4 style="color: #f59e0b; margin-top: 0;">🎯 Regla de Oro del Examen de Maestría (Método Feynman):</h4>
-        <p style="margin-bottom: 0;">"Si no eres capaz de explicar un fenómeno macroeconómico complejo con analogías cotidianas y rigor analítico en menos de dos minutos sin apoyarte en un algoritmo, aún no has adquirido maestría."</p>
-    </div>
-    """, unsafe_allow_html=True)
+    with st.container(border=True):
+        st.subheader("🎯 Regla de Oro del Examen de Maestría (Método Feynman):")
+        st.markdown("> *\"Si no eres capaz de explicar un fenómeno macroeconómico complejo con analogías cotidianas y rigor analítico en menos de dos minutos sin apoyarte en un algoritmo, aún no has adquirido maestría.\"*")
 
     viva_q1 = st.text_area(
         "Pregunta 1: ¿Por qué tener tasas reales fuertemente negativas (-1.08%) perjudica a los ahorristas pero es la única salida matemática viable para un gobierno con deuda >100% del PIB?",
@@ -720,7 +579,7 @@ with tab_viva:
 # TAB 6: RESUMEN CONSOLIDADO & EXPORTACIÓN
 # =============================================================================
 with tab_summary:
-    st.markdown("## 6. Resumen de Desempeño y Exportación del Reporte")
+    st.header("6. Resumen de Desempeño y Exportación del Reporte")
     st.markdown("""
     A continuación se presenta el consolidado de tu sesión de trabajo sincrónica.
     Descarga tu reporte oficial en formato Markdown para entregarlo al profesor o presentarlo durante tu comprobación de maestría.
@@ -745,7 +604,7 @@ with tab_summary:
         status_label = "Dominio Sobresaliente 🏆" if avg_score >= 85 else ("En Desarrollo Positivo 📈" if avg_score >= 60 else "Requiere Mayor Profundización ⚠️")
         st.metric(label="Estado de Maestría", value=status_label)
 
-    st.markdown("---")
+    st.divider()
 
     # Generación del Texto Markdown Consolidado
     report_content = f"""# REPORTE DE APRENDIZAJE Y COMPROBACIÓN DE MAESTRÍA
@@ -820,7 +679,7 @@ with tab_summary:
 *Reporte generado automáticamente por la Plataforma Educativa UIA - Sesión Sincrónica Semana 6.*
 """
 
-    st.markdown("### 📄 Vista Previa del Reporte Consolidado")
+    st.subheader("📄 Vista Previa del Reporte Consolidado")
     st.text_area("Contenido del Reporte:", value=report_content, height=280)
 
     # Botón único de exportación y descarga
